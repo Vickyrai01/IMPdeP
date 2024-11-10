@@ -1,0 +1,110 @@
+@startuml
+
+class Pelicula{
+    nombre
+    elenco 
+    --
+    nombre()
+    presupuesto()
+    sueldoElenco()
+    ganacias()
+    gananciaPorGenero()
+    esEconomica()
+    rodar()
+}
+class PeliculaAccion extends Pelicula{
+
+    vidriosRotos
+    --
+    presupuesto()
+    gananciaPorElenco()
+
+}
+class PeliculaDeComedia extends Pelicula{
+    --
+}
+class PeliculaDeDrama extends Pelicula{
+
+    --
+    gananciaPorLetraDeNombre()
+    override gananciaPorGenero()
+
+}
+class PeliculaDeTerror extends Pelicula {
+
+    cuchos
+    --
+    gananciaPorCuchos()
+    override gananciaPorGenero()
+}
+
+class Artista{
+
+    experiencia
+    peliculas
+    ahorros
+    --
+    experiencia(unaExperiencia)
+    sueldo()
+    nivelDeFama()
+    peliculasTotales()
+    recategorizarse()
+    rodar(unaPelicula)
+    trabajar()
+}
+
+Artista -->"*" Pelicula
+
+abstract class Experiencia {
+
+    categoriaSiguiente
+    --
+    recategorizarse(unArtista)
+    {abstract} sueldo(unArtista)
+    {abstract} sePuedeRecategorizar(unArtista)
+    recategorizarseSegunExperiencia(unArtista)
+
+}
+
+interface Categoria{
+    recategorizarse(unArtista)
+    sueldo()
+}
+class Amateur extends Experiencia {
+    --
+    sueldo(unArtista)
+    sePuedeRecategorizar(unArtista)
+}
+class Establecido extends Experiencia{
+
+    sueldo(unArtista)
+    sePuedeRecategorizar(unArtista)
+}
+class Estrella {
+    --
+    sueldo(unArtista)
+    recategorizarse(unArtista)
+}
+
+Artista --> Categoria
+Experiencia .u.|> Categoria
+Estrella .u.|> Categoria
+
+object impdep {
+  
+artistas
+peliculas 
+--
+actorMejorPagado()
+nombreDe(unasPelis) 
+peliculasEconomicas()
+nombreDePelisEconomicas()
+gananciasDePelisEconomicas()
+recategorizarATodos()
+
+}
+
+Artista "*"<-u- impdep
+Pelicula "*"<-u- impdep
+
+@enduml
